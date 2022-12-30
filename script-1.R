@@ -47,10 +47,13 @@ ggplot(club_subdf, aes(x = reorder(club, appearance), y = appearance, fill = clu
   geom_col() +
   coord_flip() +
   theme(legend.position = "none", axis.text.x = element_blank(), axis.ticks.x = element_blank(),
-        panel.background = element_blank(), axis.ticks.y = element_blank()) +
-  geom_text(aes(label = appearance), hjust = -0.3, vjust = 0.2, size = 3.0, lineheight = 5) +
-  labs(x = "", y = "", subtitle = "Number of players from the most represented clubs in the 2022 World Cup",
-       title = "MAN CITY AND BARCA PLAYERS TOP WORLD CUP 2022 APPEARANCE")
+        panel.background = element_blank(), axis.ticks.y = element_blank(),
+        plot.title = element_text(size = 25, face = "bold"),
+        plot.subtitle = element_text(size = 16, colour = "#333333"),
+        axis.text = element_text(size = 11, colour = "#333333")) +
+  geom_text(aes(label = appearance), hjust = -0.3, vjust = 0.2, size = 3.5, lineheight = 7) +
+  labs(x = "", y = "", subtitle = "Number of players from the most represented clubs in the\n2022 World Cup",
+       title = "Man City and Barca Players Top\nWorld Cup 2022 Appearance")
 
 
 
