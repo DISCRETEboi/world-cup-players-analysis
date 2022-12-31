@@ -68,7 +68,22 @@ ggplot(club_subdf, aes(x = reorder(club, appearance), y = appearance, fill = clu
   labs(x = "", y = "", subtitle = "Number of players from the most represented clubs in the\n2022 World Cup",
        title = "Man City and Barca Players Top\nWorld Cup 2022 Appearance")
 
+groupstgddf <- data_tbl %>% filter(final_stage == "Group stage") %>% group_by(club) %>%
+  summarise(no_of_players_cutoff = length(club)) %>% arrange(desc(no_of_players_cutoff)) %>% na.omit()
+groupstgddf_ext <- left_join(groupstgddf, club_subdf_full, by = "club")
+groupstgddf_ext$pct_of_cutoff <- ((groupstgddf_ext$no_of_players_cutoff / groupstgddf_ext$appearance) * 100) %>%
+  round(2)
+groupstgddf_ext <- arrange(groupstgddf_ext, desc(pct_of_cutoff))
 
+rof16ddf <- data_tbl %>% filter(final_stage == "Round of 16") %>% group_by(club) %>%
+  summarise(no_of_players_cutoff = length(club)) %>% arrange(desc(no_of_players_cutoff)) %>% na.omit()
+rof16ddf_ext <- left_join(rof16ddf, club_subdf_full, by = "club")
+#rof16ddf_ext <- left_join(rof16ddf_ext, groupstgddf, by = "club")
+rof16ddf_ext$pct_of_cutoff <- ((rof16ddf_ext$no_of_players_cutoff / rof16ddf_ext$appearance) * 100) %>%
+  round(2)
+rof16ddf_ext <- arrange(rof16ddf_ext, desc(pct_of_cutoff))
+
+clubs_cntr_dstrbtn <- data_tbl %>% 
 
 
 
