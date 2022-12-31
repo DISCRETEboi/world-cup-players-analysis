@@ -83,7 +83,11 @@ rof16ddf_ext$pct_of_cutoff <- ((rof16ddf_ext$no_of_players_cutoff / rof16ddf_ext
   round(2)
 rof16ddf_ext <- arrange(rof16ddf_ext, desc(pct_of_cutoff))
 
-clubs_cntr_dstrbtn <- data_tbl %>% 
+clubs_cntr_dstrbtn <- data_tbl %>%
+  group_by(club) %>%
+  summarise(no_of_countries = length(unique(country)),
+            list_of_countries = paste(unique(country), collapse = ", ")) %>%
+  arrange(desc(no_of_countries))
 
 
 
