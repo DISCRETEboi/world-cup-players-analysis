@@ -39,9 +39,22 @@ data_tbl$club[data_tbl$club == "Wolves"] <- "Wolverhampton Wanderers"
 data_tbl$club[data_tbl$club == "Tottenham"] <- "Tottenham Hotspur"
 data_tbl$club[data_tbl$club == "Sporting"] <- "Sporting CP"
 
-club_subdf <- data_tbl %>% group_by(club) %>% summarise(appearance = length(club)) %>%
+data_tbl$final_stage <- rep("Not qualified", nrow(data_tbl))
+final <- c("Argentina", "France")
+smfinals <- c("Morocco", "Croatia")
+qrtrfinals <- c("England", "Portugal", "Netherlands", "Brazil")
+rof16 <- c("Switzerland", "Spain", "South Korea", "Japan", "Senegal", "Poland", "Australia", "USMNT")
+groupstg <- c("Qatar", "Canada", "Ecuador", "Germany", "Costa Rica", "Belgium", "Iran", "Wales", "Mexico",
+            "Saudi Arabia", "Denmark", "Tunisia", "Uruguay", "Ghana", "Cameroon", "Serbia")
+data_tbl$final_stage[data_tbl$country %in% final] <- "Final"
+data_tbl$final_stage[data_tbl$country %in% smfinals] <- "Semifinals"
+data_tbl$final_stage[data_tbl$country %in% qrtrfinals] <- "Quarterfinals"
+data_tbl$final_stage[data_tbl$country %in% rof16] <- "Round of 16"
+data_tbl$final_stage[data_tbl$country %in% groupstg] <- "Group stage"
+
+club_subdf_full <- data_tbl %>% group_by(club) %>% summarise(appearance = length(club)) %>%
   arrange(desc(appearance)) %>% na.omit()
-club_subdf <- club_subdf[1:15, ]
+club_subdf <- club_subdf_full[1:15, ]
 
 ggplot(club_subdf, aes(x = reorder(club, appearance), y = appearance, fill = club)) +
   geom_col() +
